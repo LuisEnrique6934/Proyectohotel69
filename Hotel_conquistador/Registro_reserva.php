@@ -2,8 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include 'includes/conexion.php';
     session_start();
-    $pdo = new PDO('mysql:host=localhost;dbname=hotel', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
     $id_reserva = $_POST['id_reserva'];
     $id_cliente = $_POST['id_cliente'];

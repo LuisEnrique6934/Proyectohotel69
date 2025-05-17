@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $usuario_db['id_usuario'];
         $_SESSION['nombre_usuario'] = $usuario_db['nombre_usuario'];
         $_SESSION['rol'] = $usuario_db['rol'];
-        header("Location: inicio.php");
+        header("Location: Menú.php");	
         exit();
     } else {
         $error = "Usuario o contraseña incorrectos.";
@@ -143,7 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <button type="submit">Entrar</button>
         </form>
-        <p>¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
     </div>
 </body>
 </html>

@@ -7,30 +7,31 @@ $result = $pdo->query($sql);
 
 $tabla = "";
 if ($result->rowCount() > 0) {
+    $tabla .= "<div class='tabla-contenedor'>";
     $tabla .= "<table>";
-    $tabla .= "<tr>
+    $tabla .= "<thead><tr>
         <th>ID Reserva</th>
         <th>ID Cliente</th>
         <th>ID Habitación</th>
-        <th>Número de Personas</th>
-        <th>Fecha Entrada</th>
-        <th>Fecha Salida</th>
+        <th>Personas</th>
+        <th>Entrada</th>
+        <th>Salida</th>
         <th>Estado</th>
-    </tr>";
+    </tr></thead><tbody>";
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $tabla .= "<tr>";
         $tabla .= "<td>" . htmlspecialchars($row['id_reserva']) . "</td>";
         $tabla .= "<td>" . htmlspecialchars($row['id_cliente']) . "</td>";
         $tabla .= "<td>" . htmlspecialchars($row['id_habitacion']) . "</td>";
         $tabla .= "<td>" . htmlspecialchars($row['numero_personas']) . "</td>";
-        $tabla .= "<td>" . htmlspecialchars($row['fecha_entrada']) . "</td>";
-        $tabla .= "<td>" . htmlspecialchars($row['fecha_salida']) . "</td>";
-        $tabla .= "<td>" . htmlspecialchars($row['estado']) . "</td>";
+        $tabla .= "<td>" . date('d/m/Y', strtotime($row['fecha_entrada'])) . "</td>";
+        $tabla .= "<td>" . date('d/m/Y', strtotime($row['fecha_salida'])) . "</td>";
+        $tabla .= "<td>" . ucfirst(htmlspecialchars($row['estado'])) . "</td>";
         $tabla .= "</tr>";
     }
-    $tabla .= "</table>";
+    $tabla .= "</tbody></table></div>";
 } else {
-    $tabla = "No se encontraron reservas.";
+    $tabla = "<div class='mensaje-vacio'>⚠️ No se encontraron reservas.</div>";
 }
 ?>
 <!DOCTYPE html>
@@ -38,56 +39,88 @@ if ($result->rowCount() > 0) {
 <head>
     <meta charset="UTF-8">
     <title>Consulta de Reservas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #dfe9f3, #ffffff);
             margin: 0;
             padding: 0;
         }
+
         .container {
             width: 90%;
-            max-width: 900px;
-            margin: 40px auto;
+            max-width: 1000px;
+            margin: 50px auto;
             background: #fff;
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #2c3e50;
             margin-bottom: 30px;
         }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
+            font-size: 15px;
         }
+
+        thead {
+            background-color: #2980b9;
+            color: #fff;
+        }
+
         th, td {
-            padding: 12px 8px;
-            border-bottom: 1px solid #ddd;
+            padding: 12px 10px;
             text-align: center;
+            border-bottom: 1px solid #ddd;
         }
-        th {
-            background: #2980b9;
-            color: #fff;
-        }
+
         tr:nth-child(even) {
-            background: #f2f2f2;
+            background-color: #f9f9f9;
         }
+
+        .mensaje-vacio {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
         .volver {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 8px 18px;
-            background: #2980b9;
-            color: #fff;
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0;
+            padding: 10px 24px;
+            background-color: #2980b9;
+            color: white;
+            border-radius: 6px;
             text-decoration: none;
-            border-radius: 4px;
-            transition: background 0.2s;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
+
         .volver:hover {
-            background: #1c5980;
+            background-color: #1c5980;
+        }
+
+        @media (max-width: 600px) {
+            table {
+                font-size: 13px;
+            }
         }
     </style>
 </head>
@@ -95,7 +128,7 @@ if ($result->rowCount() > 0) {
     <div class="container">
         <h1>Consulta de Reservas</h1>
         <?php echo $tabla; ?>
-        <a href="Menú.php" class="volver">Volver al inicio</a>
+        <a href="Menú.php" class="volver">← Volver al inicio</a>
     </div>
 </body>
 </html>

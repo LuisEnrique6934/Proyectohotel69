@@ -3,6 +3,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include 'includes/conexion.php';
     session_start();
 
+
+
+    
+
     $id_reserva = $_POST['id_reserva'];
     $id_cliente = $_POST['id_cliente'];
     $id_habitacion = $_POST['id_habitacion'];
@@ -11,6 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fecha_salida = $_POST['fecha_salida'];
     $estado = $_POST['estado'];
 
+    // Verificar que la habitación existe
+$sql_check = "SELECT COUNT(*) FROM habitacion WHERE id_habitacion = ?";
+$stmt_check = $pdo->prepare($sql_check);
+$stmt_check->execute([$id_habitacion]);
+if ($stmt_check->fetchColumn() == 0) {
+    $mensaje = '<div class="mensaje error">❌ La habitación seleccionada no existe.</div>';
+} else {
+    // Aquí va el INSERT solo si pasa la validación
     $sql = "INSERT INTO reserva (id_reserva, id_cliente, id_habitacion, numero_personas, fecha_entrada, fecha_salida, estado) 
             VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
@@ -22,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mensaje = '<div class="mensaje error">❌ Error al registrar la reserva.</div>';
     }
     $stmt->closeCursor();
-    $pdo = null;
+}
+
 }
 ?>
 <!DOCTYPE html>

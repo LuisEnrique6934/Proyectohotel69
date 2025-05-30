@@ -136,8 +136,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="contrasena" required>
 
             <button type="submit">Registrar</button>
+            
         </form>
         <a href="admin.php">Volver</a>
+        
     </div>
 </body>
 </html>

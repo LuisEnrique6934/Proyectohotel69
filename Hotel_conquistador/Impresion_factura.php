@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><strong>Precio por noche:</strong> \$ {$row['precio']}</p>
                 <hr>
                 <p><strong>Días:</strong> {$dias}</p>
-                <p><strong>Total:</strong> \$ {number_format($total, 2)}</p>
+                <p><strong>Total:</strong> \$$total </p>
             </div>
             <button onclick="window.print()">Imprimir Factura</button>
             HTML;
@@ -60,6 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <title>Impresión de Factura</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <button onclick="window.print()">Imprimir Factura</button>
+    <button id="descargarPDF">Descargar Factura (PDF)</button>
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -142,5 +147,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <?= $factura ?>
+
+
+<script>
+    document.getElementById('descargarPDF')?.addEventListener('click', async function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const content = document.querySelector('.factura');
+        if (!content) return;
+
+        // Convertimos el contenido HTML a texto plano
+        let text = content.innerText;
+        let lines = doc.splitTextToSize(text, 180);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.text(lines, 15, 20);
+
+        // Guarda el archivo
+        doc.save('Factura_Reserva.pdf');
+    });
+</script>
+
+
 </body>
 </html>

@@ -79,7 +79,10 @@
             <nav>
                 <ul>
                     <li><a href="registro.php">Registrar Usuario</a></li>
-                    <li><a href="Menú.php">Salir</a></li>
+                    <li><a href="moficar.php">Modificar Usuario</a></li> 
+                    <li><a href="borrar.php">Borrar Usuario</a></li>
+                    <li><a href="Menú.php">Menú</a></li>
+                    <li><a href="Administracion.php">Salir</a></li>
                 </ul>
             </nav>
         </div>

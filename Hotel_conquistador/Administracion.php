@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="overlay"></div>
 
     <div class="navbar">
-        <button onclick="location.href='Menú.php'">Volver</button>
+        
         <div class="title">Acceso Administrativo</div>
     </div>
 
